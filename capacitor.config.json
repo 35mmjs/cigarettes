@@ -1,0 +1,6 @@
+{
+  "appId": "io.chris.cigarettes",
+  "appName": "cigarettes",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}

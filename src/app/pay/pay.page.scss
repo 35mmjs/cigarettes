@@ -1,0 +1,20 @@
+@import '../common.scss';
+
+.pay-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.description {
+  font-size: 30px;
+  margin-top: 10px;
+}
+
+.qrcode {
+  width: 300px;
+  height: 300px;
+  background: red;
+}

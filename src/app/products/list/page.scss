@@ -1,0 +1,33 @@
+@import '../../common.scss';
+
+.block-1,
+.block-2,
+.block-3 {
+  position: absolute;
+  width: 33%;
+  height: 41%;
+  left: 10.9%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: auto;
+  padding-bottom: 5%;
+
+  > img {
+    width: 54%;
+    margin-top: 22%;
+  }
+}
+
+.block-1 {
+  top: 7.1%;
+}
+
+.block-2 {
+  bottom: 8.5%;
+}
+
+.block-3 {
+  top: 7.1%;
+  height: 84%;
+}

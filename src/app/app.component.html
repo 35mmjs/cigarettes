@@ -1,3 +1,10 @@
 <ion-app>
+  <div class="app-menu-container">
+    <div class="app-menu" *ngIf="showMenu">
+      <a routerLink="/p1" routerLinkActive="app-menu-1-2-active" class="app-menu-1-2"></a>
+      <a routerLink="/p2" routerLinkActive="app-menu-3-active" class="app-menu-3"></a>
+      <a routerLink="/cart" routerLinkActive="app-menu-4-active" class="app-menu-4"></a>
+    </div>
+  </div>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

@@ -1,0 +1,9 @@
+<div class="page main-bg main-bg-1">
+  <div class="block-1" (touchstart)="stopScroll('b1')">
+    <img *ngFor="let pro of leisureProducts" src="{{pro.image}}" (click)="goToDetail(pro.id)">
+  </div>
+
+  <div class="block-2" (touchstart)="stopScroll('b2')">
+    <img *ngFor="let pro of sunshineProducts" src="{{pro.image}}" (click)="goToDetail(pro.id)">
+  </div>
+</div>

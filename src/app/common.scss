@@ -1,0 +1,86 @@
+.page {
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  color: RGBA(163, 139, 80, 1.00);
+  overflow: auto;
+  font-size: 20px;
+}
+
+
+.main-bg {
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.main-bg-1 {
+  background-image: url('/assets/bg/bg1.jpg');
+}
+
+.main-bg-1-clean {
+  background-image: url('/assets/bg/bg1_clean.jpg');
+}
+
+.main-bg-2 {
+  background-image: url('/assets/bg/bg2.jpg');
+}
+
+.main-bg-3 {
+  background-image: url('/assets/bg/bg3.jpg');
+}
+
+.close {
+  height: 100px;
+  width: 100%;
+}
+
+.close-icon {
+  font-size: 66px;
+  float: right;
+}
+
+
+.stepperInput {
+  display: flex;
+  height: 40px;
+  line-height: 40px;
+  font-size: 24px;
+}
+
+.stepperInput__input {
+  border-left: 0;
+  border-right: 0;
+  width: 52px;
+  text-align: center;
+}
+
+.button {
+  cursor: pointer;
+  width: 43px;
+  font-size: 24px;
+  color: RGBA(75, 62, 39, 1.00);
+  background-color: RGBA(163, 139, 80, 1.00);
+  border: 1px solid RGBA(163, 139, 80, 1.00);
+}
+
+.button--addOnLeft {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.button--addOnRight {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input {
+  background: transparent;
+  border: 1px solid RGBA(163, 139, 80, 1.00);
+  padding: 0 10px;
+  border-radius: 0;
+  box-shadow: none;
+}

@@ -1,0 +1,65 @@
+<div class="page main-bg main-bg-1-clean">
+  <div class="main-content">
+    <ion-slides pager="true" autoplay="2000" class="slides" (ionSlideDidChange)="onSlideChange()">
+      <ion-slide *ngFor="let slide of slides">
+        <img src="{{slide.image}}" class="slide-image">
+      </ion-slide>
+    </ion-slides>
+
+    <div class="desc">
+      <div class="desc-title">{{slideDesc.title}}</div>
+      <div class="desc-content">
+        {{slideDesc.desc}}
+      </div>
+    </div>
+
+    <div class="close">
+      <ion-icon name="ios-close-circle-outline" class="close-icon" (click)="goBack()"></ion-icon>
+    </div>
+
+    <div class="cart">
+      <img src="{{product.image}}" class="cart-image">
+      <div class="cart-detail">
+        <div class="cart-title">{{product.id}}</div>
+        <div class="cart-detail-content">
+          <div>
+            <div class="cart-label">
+              单价：<span class="cart-price">￥{{product.price}}</span>
+            </div>
+          </div>
+          <div>
+            <div class="cart-input">
+              <div>数量：</div>
+              <div class="stepperInput">
+                <button class="button button--addOnLeft" (click)="minus('packet')">-</button>
+                <input type="text" value="{{packetNum}}" class="input stepperInput__input" disabled/>
+                <button class="button button--addOnRight" (click)="add('packet')">+</button>
+              </div>
+              <div>包</div>
+            </div>
+            <div class="cart-input">
+              <div style="visibility: hidden">数量：</div>
+              <div class="stepperInput">
+                <button class="button button--addOnLeft" (click)="minus('carton')">-</button>
+                <input type="text" value="{{cartonNum}}" class="input stepperInput__input" disabled/>
+                <button class="button button--addOnRight" (click)="add('carton')">+</button>
+              </div>
+              <div>条</div>
+            </div>
+            <div>合计：<span class="cart-price cart-price-total">￥{{total}}</span></div>
+          </div>
+        </div>
+        <div class="cart-opts">
+          <div *ngIf="!added" (click)="addToCart()" class="cart-opts-btn">添加到购物车</div>
+          <div *ngIf="added" (click)="goToCart()" class="cart-opts-btn">去购物车结算</div>
+          <div *ngIf="added" (click)="goBack()" class="cart-opts-btn">继续购买</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="desc2">
+      <div class="desc-title">{{product.descTitle}}</div>
+      <div>{{product.desc}}</div>
+    </div>
+  </div>
+</div>

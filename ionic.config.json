@@ -1,6 +1,8 @@
 {
   "name": "ci",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular",
   "pro_id": "ba622ca8"
 }

@@ -1,0 +1,84 @@
+package io.chris.cigarettes.services;
+
+import android.os.AsyncTask;
+
+import org.ksoap2.serialization.SoapObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.concurrent.ExecutionException;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import io.chris.cigarettes.util.WS;
+import io.chris.cigarettes.services.LoginService;
+
+public class BizService {
+    private String methodName = "service";
+    private String dh = "9999999999";
+    private String khbh = "9999999999";
+    private String user_pass = "1516348211";
+    private String unit_pass = "2515D842E14054425A7122403F196ACB";
+    private static BizService instance;
+
+    public static BizService getInstance() {
+        if(instance == null) {
+            instance = new BizService();
+        }
+        return instance;
+    }
+
+    public boolean startPay() {
+        JsonObject parValue = new JsonObject();
+        parValue.addProperty("paytype", "MICROPAY");
+        parValue.addProperty("trade_type", "NATIVE");
+        parValue.addProperty("khbh", khbh);
+        parValue.addProperty("storeid", "01"); // ??
+        parValue.addProperty("total_amount", "0.01"); // 待传入
+        parValue.addProperty("subject", "烟草");
+        parValue.addProperty("body", "烟草交易");
+        parValue.addProperty("product_id", "3456789");
+
+        JsonArray productDetails = new JsonArray();
+        parValue.add("goods_detail", productDetails);
+
+        parValue.addProperty("spbill_create_ip", "192.168.1.100");
+        parValue.addProperty("w_khbh_id", "P201710161556387");
+        parValue.addProperty("operator_id", "001");
+        parValue.addProperty("terminal_id", "001");
+        parValue.addProperty("xslx", "LS");
+
+        String parValueString = null;
+        try {
+            parValueString = URLEncoder.encode(parValue.toString(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        WS ws = new WS();
+        SoapObject soapObject = ws.getRequest(methodName);
+        soapObject.addProperty("sessionId", LoginService.getInstance().getSessionId());
+        soapObject.addProperty("svr_type", "WAPPC1");
+        soapObject.addProperty("par_value", parValueString);
+        soapObject.addProperty("md5", "md5");
+
+        AsyncTask result = ws.execute(soapObject);
+        try {
+            SoapObject res = (SoapObject) result.get();
+            String stringValue = res.getProperty("stringValue").toString();
+            Integer errorCode = (Integer) res.getProperty("errorCode");
+
+            if (errorCode > 0) {
+            } else {
+            }
+            return true;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+}
