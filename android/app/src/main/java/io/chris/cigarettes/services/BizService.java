@@ -6,12 +6,15 @@ import org.ksoap2.serialization.SoapObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import io.chris.cigarettes.util.WS;
+import io.chris.cigarettes.util.MD5;
 import io.chris.cigarettes.services.LoginService;
 
 public class BizService {
@@ -21,6 +24,7 @@ public class BizService {
     private String user_pass = "1516348211";
     private String unit_pass = "2515D842E14054425A7122403F196ACB";
     private static BizService instance;
+    public final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMM");
 
     public static BizService getInstance() {
         if(instance == null) {
@@ -61,7 +65,7 @@ public class BizService {
         soapObject.addProperty("sessionId", LoginService.getInstance().getSessionId());
         soapObject.addProperty("svr_type", "WAPPC1");
         soapObject.addProperty("par_value", parValueString);
-        soapObject.addProperty("md5", "md5");
+        soapObject.addProperty("md5", MD5.encrypt(parValueString + khbh + user_pass + dateFormat.format(new Date()) + unit_pass).toUpperCase());
 
         AsyncTask result = ws.execute(soapObject);
         try {

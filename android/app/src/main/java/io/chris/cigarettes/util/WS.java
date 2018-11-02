@@ -9,8 +9,6 @@ import org.ksoap2.SoapFault;
 
 import java.io.IOException;
 import org.xmlpull.v1.XmlPullParserException;
-import org.ksoap2.transport.HttpResponseException;
-
 
 public class WS extends AsyncTask<SoapObject, SoapObject, SoapObject> {
     private final String WSDL_URI="http://paytest.zxhsd.com/services/Exchange?wsdl";
@@ -32,17 +30,12 @@ public class WS extends AsyncTask<SoapObject, SoapObject, SoapObject> {
 
         try {
             httpTransport.call(null, envelope);
-        } catch (HttpResponseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (XmlPullParserException e) {
+        } catch (IOException | XmlPullParserException e) {
             e.printStackTrace();
         }
 
         try {
-            SoapObject result = (SoapObject) envelope.getResponse();
-            return result;
+            return (SoapObject) envelope.getResponse();
         } catch (SoapFault e) {
             e.printStackTrace();
         }
