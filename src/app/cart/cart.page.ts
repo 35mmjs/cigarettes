@@ -25,6 +25,7 @@ export class CartPage implements OnInit {
   items = [];
   productMap = {};
   totalAmount = '0';
+  paying = false;
   constructor(
     private productService: ProductService,
     private cartService: CartService,
@@ -108,6 +109,7 @@ export class CartPage implements OnInit {
   }
 
   pay() {
+    this.paying = true;
     const payRequest = {
       'total_amount': this.totalAmount,
       'goods_detail': this.items.map(item => ({
@@ -130,6 +132,7 @@ export class CartPage implements OnInit {
           message: res.errorMessage,
         });
       }
+      this.paying = false;
     });
   }
 
