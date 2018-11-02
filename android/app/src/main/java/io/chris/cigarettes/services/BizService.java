@@ -137,4 +137,8 @@ public class BizService {
 
         return payResult;
     }
+
+    public void queryPayResult() {
+        JSObject query = new JSObject();
+    }
 }

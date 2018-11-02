@@ -24,4 +24,14 @@ public class BizAPI extends Plugin {
           call.success(BizService.getInstance().startPay(payRequest));
       }
   }
+
+  @PluginMethod()
+  public void QueryPayResult(PluginCall call) {
+      call.success();
+  }
+
+  @PluginMethod()
+  public void Print() {
+    // TODO
+  }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { CartService } from './cart.service';
 import { ProductService } from '../products/products.service';
 
@@ -25,13 +25,13 @@ export class CartPage implements OnInit {
   items = [];
   productMap = {};
   totalAmount = '0';
-  paying = false;
   constructor(
     private productService: ProductService,
     private cartService: CartService,
     private localtion: Location,
     private router: Router,
     private alertController: AlertController,
+    private loadingController: LoadingController,
   ) {
 
   }
@@ -108,8 +108,12 @@ export class CartPage implements OnInit {
     this.router.navigate(['/p1']);
   }
 
-  pay() {
-    this.paying = true;
+  async pay() {
+    const prepare = await this.loadingController.create({
+      message: '正在准备支付...',
+    });
+
+    prepare.present();
     const payRequest = {
       'total_amount': this.totalAmount,
       'goods_detail': this.items.map(item => ({
@@ -124,6 +128,7 @@ export class CartPage implements OnInit {
     };
 
     Plugins.BizAPI.StartPay(payRequest).then((res) => {
+      prepare.dismiss();
       if (res.success) {
         this.router.navigate(['/pay']);
       } else {
@@ -132,7 +137,6 @@ export class CartPage implements OnInit {
           message: res.errorMessage,
         });
       }
-      this.paying = false;
     });
   }
 
