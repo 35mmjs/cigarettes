@@ -2,7 +2,6 @@ package io.chris.cigarettes.services;
 
 import android.os.AsyncTask;
 
-import org.json.JSONObject;
 import org.ksoap2.serialization.SoapObject;
 
 import java.io.UnsupportedEncodingException;
@@ -11,8 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.getcapacitor.JSObject;
+import com.getcapacitor.JSArray;
 
 import io.chris.cigarettes.util.WS;
 import io.chris.cigarettes.util.MD5;
@@ -33,25 +32,25 @@ public class BizService {
         return instance;
     }
 
-    public JsonObject startPay() {
-        JsonObject parValue = new JsonObject();
-        parValue.addProperty("paytype", "MICROPAY");
-        parValue.addProperty("trade_type", "NATIVE");
-        parValue.addProperty("khbh", khbh);
-        parValue.addProperty("storeid", "01"); // ??
-        parValue.addProperty("total_amount", "0.01"); // 待传入
-        parValue.addProperty("subject", "烟草");
-        parValue.addProperty("body", "烟草交易");
-        parValue.addProperty("product_id", "3456789");
+    public JSObject startPay(JSObject payRequest) {
+        JSObject parValue = new JSObject();
+        parValue.put("paytype", "MICROPAY");
+        parValue.put("trade_type", "NATIVE");
+        parValue.put("khbh", khbh);
+        parValue.put("storeid", "01"); // ??
+        parValue.put("total_amount", "0.01"); // 待传入
+        parValue.put("subject", "烟草");
+        parValue.put("body", "烟草交易");
+        parValue.put("product_id", "3456789");
 
-        JsonArray productDetails = new JsonArray();
-        parValue.add("goods_detail", productDetails);
+        JSArray productDetails = new JSArray();
+        parValue.put("goods_detail", productDetails);
 
-        parValue.addProperty("spbill_create_ip", "192.168.1.100");
-        parValue.addProperty("w_khbh_id", "P201710161556387");
-        parValue.addProperty("operator_id", "001");
-        parValue.addProperty("terminal_id", "001");
-        parValue.addProperty("xslx", "LS");
+        parValue.put("spbill_create_ip", "192.168.1.100");
+        parValue.put("w_khbh_id", "P201710161556387");
+        parValue.put("operator_id", "001");
+        parValue.put("terminal_id", "001");
+        parValue.put("xslx", "LS");
 
         String parValueString = null;
         try {
@@ -70,22 +69,22 @@ public class BizService {
         soapObject.addProperty("md5", MD5.encrypt(md5Str).toUpperCase());
         AsyncTask task = ws.execute(soapObject);
 
-        JsonObject payResult = new JsonObject();
+        JSObject payResult = new JSObject();
         try {
             SoapObject res = (SoapObject) task.get();
             String stringValue = res.getProperty("stringValue").toString();
             Integer errorCode = (Integer) res.getProperty("errorCode");
 
             if (errorCode > 0) {
-                payResult.addProperty("success", false);
-                payResult.addProperty("errorMessage", stringValue);
+                payResult.put("success", false);
+                payResult.put("errorMessage", stringValue);
             } else {
-                payResult.addProperty("success", true);
+                payResult.put("success", true);
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            payResult.addProperty("success", false);
-            payResult.addProperty("errorMessage", e.getMessage());
+            payResult.put("success", false);
+            payResult.put("errorMessage", e.getMessage());
         }
 
         return payResult;

@@ -13,7 +13,7 @@ declare global {
 }
 
 interface BizAPI {
-  StartPay(): Promise<any>;
+  StartPay(any): Promise<any>;
 }
 
 @Component({
@@ -108,7 +108,20 @@ export class CartPage implements OnInit {
   }
 
   pay() {
-    Plugins.BizAPI.StartPay().then((res) => {
+    const payRequest = {
+      'total_amount': this.totalAmount,
+      'goods_detail': this.items.map(item => ({
+        'goods_id': item.id,
+        'goods_name': item.id,
+        'price': item.price,
+        'sail_price': item.price,
+        'discountable_type': '0',
+        'packetQuantity': item.packetNum,
+        'cartonQuantity': item.cartonNum,
+      })),
+    };
+
+    Plugins.BizAPI.StartPay(payRequest).then((res) => {
       if (res.success) {
         this.router.navigate(['/pay']);
       } else {
