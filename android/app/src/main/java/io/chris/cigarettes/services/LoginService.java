@@ -52,9 +52,7 @@ public class LoginService {
                 this.setSessionId(sessionId);
             }
             return true;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 

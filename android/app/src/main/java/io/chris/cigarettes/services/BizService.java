@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import com.getcapacitor.JSObject;
+import com.getcapacitor.JSArray;
 
 import io.chris.cigarettes.util.WS;
 import io.chris.cigarettes.util.MD5;
@@ -47,6 +48,36 @@ public class BizService {
         payRequest.put("operator_id", "001");
         payRequest.put("terminal_id", "001");
         payRequest.put("xslx", "LS");
+
+        /*
+        // Test Data
+        payRequest.put("paytype", "MICROPAY");
+        payRequest.put("trade_type", "NATIVE");
+        payRequest.put("khbh", "9999999999"); // 9999999999
+        payRequest.put("storeid", "01");
+        payRequest.put("total_amount", "0.01");
+        payRequest.put("subject", "图书");
+        payRequest.put("body", "图书交易");
+        payRequest.put("product_id", "商品ID");
+        payRequest.put("spbill_create_ip", "192.168.1.100");
+        payRequest.put("w_khbh_id", "P201710161556387");
+        payRequest.put("operator_id", "001");
+        payRequest.put("terminal_id", "001");
+        payRequest.put("xslx", "LS");
+
+        JSArray goods = new JSArray();
+        JSObject g1 = new JSObject();
+        g1.put("goods_id", "730504654124642");
+        g1.put("goods_name", "一年级小学生作文起跑线作文初学入门");
+        g1.put("price", "12");
+        g1.put("quantity", "1");
+        g1.put("sale_price", "12");
+        g1.put("discountable_type", "0");
+        g1.put("isbn", "730504654124642");
+        g1.put("tm", "730504654124642");
+        goods.put(g1);
+        payRequest.put("goods_detail", goods);
+        */
 
         String parValueString = null;
         try {
