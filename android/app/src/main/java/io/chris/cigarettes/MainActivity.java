@@ -20,7 +20,6 @@ public class MainActivity extends BridgeActivity {
       add(BizAPI.class);
     }});
 
-//    LoginService.getInstance().doLogin();
-//    BizService.getInstance().startPay();
+    LoginService.getInstance().doLogin();
   }
 }

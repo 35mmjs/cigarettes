@@ -2,6 +2,7 @@ package io.chris.cigarettes.services;
 
 import android.os.AsyncTask;
 
+import org.json.JSONObject;
 import org.ksoap2.serialization.SoapObject;
 
 import java.io.UnsupportedEncodingException;
@@ -15,7 +16,6 @@ import com.google.gson.JsonObject;
 
 import io.chris.cigarettes.util.WS;
 import io.chris.cigarettes.util.MD5;
-import io.chris.cigarettes.services.LoginService;
 
 public class BizService {
     private String methodName = "service";
@@ -33,7 +33,7 @@ public class BizService {
         return instance;
     }
 
-    public boolean startPay() {
+    public JsonObject startPay() {
         JsonObject parValue = new JsonObject();
         parValue.addProperty("paytype", "MICROPAY");
         parValue.addProperty("trade_type", "NATIVE");
@@ -65,24 +65,29 @@ public class BizService {
         soapObject.addProperty("sessionId", LoginService.getInstance().getSessionId());
         soapObject.addProperty("svr_type", "WAPPC1");
         soapObject.addProperty("par_value", parValueString);
-        soapObject.addProperty("md5", MD5.encrypt(parValueString + khbh + user_pass + dateFormat.format(new Date()) + unit_pass).toUpperCase());
 
-        AsyncTask result = ws.execute(soapObject);
+        String md5Str = parValueString + khbh + user_pass + dateFormat.format(new Date()) + unit_pass;
+        soapObject.addProperty("md5", MD5.encrypt(md5Str).toUpperCase());
+        AsyncTask task = ws.execute(soapObject);
+
+        JsonObject payResult = new JsonObject();
         try {
-            SoapObject res = (SoapObject) result.get();
+            SoapObject res = (SoapObject) task.get();
             String stringValue = res.getProperty("stringValue").toString();
             Integer errorCode = (Integer) res.getProperty("errorCode");
 
             if (errorCode > 0) {
+                payResult.addProperty("success", false);
+                payResult.addProperty("errorMessage", stringValue);
             } else {
+                payResult.addProperty("success", true);
             }
-            return true;
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+            payResult.addProperty("success", false);
+            payResult.addProperty("errorMessage", e.getMessage());
         }
 
-        return false;
+        return payResult;
     }
 }
