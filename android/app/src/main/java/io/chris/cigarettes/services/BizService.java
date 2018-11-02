@@ -6,12 +6,15 @@ import org.ksoap2.serialization.SoapObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+//import java.nio.charset.StandardCharsets;
+//import java.security.MessageDigest;
+//import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import com.getcapacitor.JSObject;
-import com.getcapacitor.JSArray;
 
 import io.chris.cigarettes.util.WS;
 import io.chris.cigarettes.util.MD5;
@@ -23,7 +26,7 @@ public class BizService {
     private String user_pass = "1516348211";
     private String unit_pass = "2515D842E14054425A7122403F196ACB";
     private static BizService instance;
-    public final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMM");
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMM");
 
     public static BizService getInstance() {
         if(instance == null) {
@@ -40,7 +43,7 @@ public class BizService {
         payRequest.put("subject", "烟草");
         payRequest.put("body", "烟草交易");
         payRequest.put("spbill_create_ip", "192.168.1.100");
-        payRequest.put("w_khbh_id", "P201710161556387");
+        payRequest.put("w_khbh_id", "P" + new Timestamp(new Date().getTime()).getTime()); // 商户订单号
         payRequest.put("operator_id", "001");
         payRequest.put("terminal_id", "001");
         payRequest.put("xslx", "LS");
@@ -59,7 +62,28 @@ public class BizService {
         soapObject.addProperty("par_value", parValueString);
 
         String md5Str = parValueString + khbh + user_pass + dateFormat.format(new Date()) + unit_pass;
-        soapObject.addProperty("md5", MD5.encrypt(md5Str).toUpperCase());
+
+        /*
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        byte[] hashInBytes = md.digest(md5Str.getBytes(StandardCharsets.UTF_8));
+        StringBuilder sb = new StringBuilder();
+        for (byte aByte : hashInBytes) {
+            String s = Integer.toHexString(0xff & aByte);
+            if (s.length() == 1) {
+                sb.append("0" + s);
+            } else {
+                sb.append(s);
+            }
+        }
+        soapObject.addProperty("md5_value", sb.toString().toUpperCase());
+        */
+
+        soapObject.addProperty("md5_value", MD5.encrypt(md5Str).toUpperCase());
         AsyncTask task = ws.execute(soapObject);
 
         JSObject payResult = new JSObject();
