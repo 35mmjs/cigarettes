@@ -33,28 +33,21 @@ public class BizService {
     }
 
     public JSObject startPay(JSObject payRequest) {
-        JSObject parValue = new JSObject();
-        parValue.put("paytype", "MICROPAY");
-        parValue.put("trade_type", "NATIVE");
-        parValue.put("khbh", khbh);
-        parValue.put("storeid", "01"); // ??
-        parValue.put("total_amount", "0.01"); // 待传入
-        parValue.put("subject", "烟草");
-        parValue.put("body", "烟草交易");
-        parValue.put("product_id", "3456789");
-
-        JSArray productDetails = new JSArray();
-        parValue.put("goods_detail", productDetails);
-
-        parValue.put("spbill_create_ip", "192.168.1.100");
-        parValue.put("w_khbh_id", "P201710161556387");
-        parValue.put("operator_id", "001");
-        parValue.put("terminal_id", "001");
-        parValue.put("xslx", "LS");
+        payRequest.put("paytype", "MICROPAY");
+        payRequest.put("trade_type", "NATIVE");
+        payRequest.put("khbh", khbh);
+        payRequest.put("storeid", "01"); // ??
+        payRequest.put("subject", "烟草");
+        payRequest.put("body", "烟草交易");
+        payRequest.put("spbill_create_ip", "192.168.1.100");
+        payRequest.put("w_khbh_id", "P201710161556387");
+        payRequest.put("operator_id", "001");
+        payRequest.put("terminal_id", "001");
+        payRequest.put("xslx", "LS");
 
         String parValueString = null;
         try {
-            parValueString = URLEncoder.encode(parValue.toString(), "UTF-8");
+            parValueString = URLEncoder.encode(payRequest.toString(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
