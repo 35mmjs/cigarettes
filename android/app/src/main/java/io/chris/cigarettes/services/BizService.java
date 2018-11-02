@@ -120,14 +120,15 @@ public class BizService {
         JSObject payResult = new JSObject();
         try {
             SoapObject res = (SoapObject) task.get();
-            String stringValue = res.getProperty("stringValue").toString();
+            Object stringValue = res.getProperty("stringValue");
             Integer errorCode = (Integer) res.getProperty("errorCode");
 
             if (errorCode > 0) {
                 payResult.put("success", false);
-                payResult.put("errorMessage", stringValue);
+                payResult.put("errorMessage", stringValue.toString());
             } else {
                 payResult.put("success", true);
+                payResult.put("data", stringValue);
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

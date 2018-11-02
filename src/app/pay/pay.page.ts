@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PayService } from './pay.service';
 
 @Component({
   selector: 'app-pay',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
 export class PayPage implements OnInit {
   constructor(
     private router: Router,
+    private payService: PayService,
   ) {}
 
   ngOnInit() {

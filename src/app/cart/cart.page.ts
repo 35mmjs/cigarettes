@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { CartService } from './cart.service';
+import { PayService } from '../pay/pay.service';
 import { ProductService } from '../products/products.service';
 
 declare global {
@@ -28,7 +29,7 @@ export class CartPage implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private localtion: Location,
+    private payService: PayService,
     private router: Router,
     private alertController: AlertController,
     private loadingController: LoadingController,
@@ -131,10 +132,13 @@ export class CartPage implements OnInit {
     Plugins.BizAPI.StartPay(payRequest).then((res) => {
       prepare.dismiss();
       if (res.success) {
-        this.router.navigate(['/pay']);
+        try {
+          this.payService.setOrderInfo(JSON.parse(res.data));
+          this.router.navigate(['/pay']);
+        } catch {}
       } else {
         this.presentAlert({
-          header: '支付失败!',
+          header: '订单创建失败!',
           message: res.errorMessage,
         });
       }
