@@ -5,7 +5,6 @@ import { Plugins } from '@capacitor/core';
 import { AlertController } from '@ionic/angular';
 import { CartService } from './cart.service';
 import { ProductService } from '../products/products.service';
-import { PayService } from '../pay/pay.service';
 
 declare global {
   interface PluginRegistry {
@@ -30,7 +29,6 @@ export class CartPage implements OnInit {
     private productService: ProductService,
     private cartService: CartService,
     private localtion: Location,
-    private payService: PayService,
     private router: Router,
     private alertController: AlertController,
   ) {
@@ -110,18 +108,22 @@ export class CartPage implements OnInit {
   }
 
   pay() {
-    // this.payService.tradePay();
-    Plugins.BizAPI.StartPay().then(() => {
-      this.presentAlert();
+    Plugins.BizAPI.StartPay().then((res) => {
+      if (res.success) {
+        this.router.navigate(['/pay']);
+      } else {
+        this.presentAlert({
+          header: '支付失败!',
+          message: res.errorMessage,
+        });
+      }
     });
-    // this.router.navigate(['/pay']);
   }
 
-  async presentAlert() {
+  async presentAlert({ header, message }) {
     const alert = await this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Subtitle',
-      message: 'This is an alert message.',
+      header,
+      message,
       buttons: ['OK']
     });
 
