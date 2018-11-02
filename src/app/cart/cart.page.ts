@@ -122,6 +122,7 @@ export class CartPage implements OnInit {
         'price': item.price,
         'sail_price': item.price,
         'discountable_type': '0',
+        'quantity': '1',
         'packetQuantity': item.packetNum,
         'cartonQuantity': item.cartonNum,
       })),

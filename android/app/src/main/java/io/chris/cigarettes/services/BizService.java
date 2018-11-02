@@ -24,7 +24,7 @@ public class BizService {
     private String methodName = "service";
     private String dh = "9999999999";
     private String khbh = "9999999999";
-    private String user_pass = "1516348211";
+    private String user_pass = "1548070138";
     private String unit_pass = "2515D842E14054425A7122403F196ACB";
     private static BizService instance;
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMM");
