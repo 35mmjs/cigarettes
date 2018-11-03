@@ -3,7 +3,10 @@
     <div class="close">
       <ion-icon name="ios-close-circle-outline" class="close-icon" (click)="goBack()"></ion-icon>
     </div>
-    <qrcode *ngIf="payService.orderInfo.code_url" class="qrcode" [size]="300" [qrdata]="payService.orderInfo.code_url" [level]="'M'"></qrcode>
+    <div class="qrcode">
+      <!-- <canvas id="qr"></canvas> -->
+      <img src="{{qrcode}}">
+    </div>
     <div class="description">请打开微信扫码支付</div>
   </div>
 </div>
