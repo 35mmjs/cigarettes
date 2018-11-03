@@ -27,7 +27,9 @@ public class BizAPI extends Plugin {
 
   @PluginMethod()
   public void QueryPayResult(PluginCall call) {
-      call.success();
+      JSObject queryObject = call.getData();
+      JSObject res = BizService.getInstance().queryPayResult(queryObject);
+      call.success(res);
   }
 
   @PluginMethod()

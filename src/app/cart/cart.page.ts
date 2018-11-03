@@ -1,21 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { CartService } from './cart.service';
 import { PayService } from '../pay/pay.service';
 import { ProductService } from '../products/products.service';
-
-declare global {
-  interface PluginRegistry {
-    BizAPI?: BizAPI;
-  }
-}
-
-interface BizAPI {
-  StartPay(any): Promise<any>;
-}
 
 @Component({
   selector: 'app-cart',

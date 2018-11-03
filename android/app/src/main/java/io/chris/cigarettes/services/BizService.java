@@ -139,7 +139,46 @@ public class BizService {
         return payResult;
     }
 
-    public void queryPayResult() {
-        JSObject query = new JSObject();
+    public JSObject queryPayResult(JSObject query) {
+        query.put("khbh", khbh);
+
+        String parValueString = null;
+        try {
+            parValueString = URLEncoder.encode(query.toString(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        WS ws = new WS();
+        SoapObject soapObject = ws.getRequest(methodName);
+        soapObject.addProperty("sessionId", LoginService.getInstance().getSessionId());
+        soapObject.addProperty("svr_type", "QUERYW1");
+        soapObject.addProperty("par_value", parValueString);
+
+        String md5Str = parValueString + khbh + user_pass + dateFormat.format(new Date()) + unit_pass;
+
+        soapObject.addProperty("md5_value", MD5.encrypt(md5Str).toUpperCase());
+        AsyncTask task = ws.execute(soapObject);
+        JSObject queryResult = new JSObject();
+
+        try {
+            SoapObject res = (SoapObject) task.get();
+            Object stringValue = res.getProperty("stringValue");
+            Integer errorCode = (Integer) res.getProperty("errorCode");
+
+            if (errorCode > 0) {
+                queryResult.put("success", false);
+                queryResult.put("errorMessage", stringValue.toString());
+            } else {
+                queryResult.put("success", true);
+                queryResult.put("data", stringValue);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            queryResult.put("success", false);
+            queryResult.put("errorMessage", e.getMessage());
+        }
+
+        return queryResult;
     }
 }

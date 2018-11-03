@@ -10,6 +10,17 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+declare global {
+  interface PluginRegistry {
+    BizAPI?: BizAPI;
+  }
+}
+
+interface BizAPI {
+  StartPay(any): Promise<any>;
+  QueryPayResult(any): Promise<any>;
+}
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
