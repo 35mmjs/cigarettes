@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-
+import { Location } from '@angular/common';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private router: Router,
     private cart: CartService,
+    private location: Location,
   ) {
     this.initializeApp();
   }
@@ -52,7 +53,9 @@ export class AppComponent implements OnInit {
     }
     this.interval = setInterval(() => {
       this.cart.clear();
-      this.router.navigate(['/p1']);
+      if (this.location.path().indexOf('pay') === -1) {
+        this.router.navigate(['/p1']);
+      }
     }, 5 * 60 * 1000);
   }
 }
