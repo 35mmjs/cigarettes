@@ -52,6 +52,7 @@ export class PayPage implements OnInit {
   }
 
   goBack() {
+    clearInterval(this.queryInterval);
     this.router.navigate(['/cart']);
   }
 
@@ -66,7 +67,7 @@ export class PayPage implements OnInit {
         clearInterval(this.queryInterval);
         (async () => {
           const prepare = await this.loadingController.create({
-            message: '支付超时，5 秒后返回购物车...请重新生成订单',
+            message: '支付超时，5秒后返回购物车...请重新生成订单',
             duration: 5000,
           });
           prepare.present();
