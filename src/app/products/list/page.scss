@@ -11,11 +11,15 @@
   align-items: center;
   flex-direction: column;
   overflow: auto;
-  padding-bottom: 5%;
+  padding-bottom: 2%;
 
   > img {
     width: 54%;
     margin-top: 22%;
+
+    &:first-child {
+      margin-top: 10%;
+    }
   }
 }
 
@@ -30,4 +34,8 @@
 .block-3 {
   top: 9.1%;
   height: 82%;
+
+  > img {
+    margin-top: 25%;
+  }
 }

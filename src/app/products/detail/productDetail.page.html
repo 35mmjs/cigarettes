@@ -1,5 +1,10 @@
 <div class="page main-bg main-bg-1-clean">
   <div class="main-content">
+    <div class="desc2">
+      <div class="desc-title">{{product.descTitle}}</div>
+      <div>{{product.desc}}</div>
+    </div>
+
     <ion-slides pager="true" autoplay="2000" class="slides" (ionSlideDidChange)="onSlideChange()">
       <ion-slide *ngFor="let slide of slides">
         <img src="{{slide.image}}" class="slide-image">

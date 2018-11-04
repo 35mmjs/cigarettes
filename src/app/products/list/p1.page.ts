@@ -44,6 +44,7 @@ export class ProductsPage implements OnInit {
 
     const height = element.clientHeight;
     const scrollHeight = element.scrollHeight;
+    element.scrollTop = scrollHeight - height;
 
     // 如果高度相等，延迟半秒再试
     if (height === scrollHeight) {
@@ -53,7 +54,7 @@ export class ProductsPage implements OnInit {
       return;
     }
 
-    this.scrollDirection[id] = 'bottom';
+    this.scrollDirection[id] = 'top';
     this.scrollInterval[id] = setInterval(() => {
       if (this.scrollStatus[id] && this.scrollStatus[id] === 'stop') {
         return;
@@ -61,11 +62,15 @@ export class ProductsPage implements OnInit {
 
       let scrollTop = element.scrollTop;
       if (this.scrollDirection[id] === 'bottom' && scrollTop + height >= scrollHeight) {
-        this.scrollDirection[id] = 'top';
+        // this.scrollDirection[id] = 'top';
+        element.scrollTop = 0;
+        return;
       }
 
       if (this.scrollDirection[id] === 'top' && scrollTop <= 0) {
-        this.scrollDirection[id] = 'bottom';
+        // this.scrollDirection[id] = 'bottom';
+        element.scrollTop = scrollHeight - height;
+        return;
       }
 
       if (this.scrollDirection[id] === 'bottom') {

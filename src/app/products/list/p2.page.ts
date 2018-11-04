@@ -14,7 +14,7 @@ export class ProductsPage implements OnInit {
   scrollInterval = {};
   scrollTime = 50;
   scrollGap = 5;
-  scrollDirection = 'bottom';
+  scrollDirection = 'top';
   scrollStatus = {};
   stopTimer = {};
 
@@ -40,6 +40,7 @@ export class ProductsPage implements OnInit {
 
     const height = element.clientHeight;
     const scrollHeight = element.scrollHeight;
+    element.scrollTop = scrollHeight - height;
 
     // 如果高度相等，延迟半秒再试
     if (height === scrollHeight) {
@@ -60,7 +61,9 @@ export class ProductsPage implements OnInit {
       }
 
       if (this.scrollDirection === 'top' && scrollTop <= 0) {
-        this.scrollDirection = 'bottom';
+        // this.scrollDirection = 'bottom';
+        element.scrollTop = scrollHeight - height;
+        return;
       }
 
       if (this.scrollDirection === 'bottom') {
