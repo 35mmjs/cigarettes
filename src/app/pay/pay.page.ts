@@ -5,6 +5,7 @@ import { Plugins } from '@capacitor/core';
 import QRious from 'qrious';
 
 import { PayService } from './pay.service';
+import { CartService } from '../cart/cart.service';
 
 @Component({
   selector: 'app-pay',
@@ -19,6 +20,7 @@ export class PayPage implements OnInit {
   constructor(
     private router: Router,
     private payService: PayService,
+    private cartService: CartService,
     private loadingController: LoadingController,
     private alertController: AlertController,
   ) {}
@@ -88,7 +90,7 @@ export class PayPage implements OnInit {
 
           (async () => {
             await this.paySuccess();
-            // TODO: call Print
+            await this.callPrint();
           })();
         } else {
           this.payFailed(res.errorMessage);
@@ -119,6 +121,28 @@ export class PayPage implements OnInit {
     clearInterval(this.queryInterval);
     this.presentAlert({
       header: '支付失败!',
+      message: errorMessage,
+    });
+  }
+
+  async callPrint() {
+    Plugins.BizAPI.Print({
+      'items': this.cartService.getItems()
+    }).then(res => {
+      if (res.success) {
+        // 打印成功提示
+      } else {
+        this.payFailed(res.errorMessage);
+        // TODO: 增加重试逻辑
+        // 实在打印不成功，就弹出打印清单，联系管理员
+      }
+    });
+  }
+
+  async printFailed(errorMessage) {
+    clearInterval(this.queryInterval);
+    this.presentAlert({
+      header: '打印失败!',
       message: errorMessage,
     });
   }

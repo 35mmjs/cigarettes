@@ -19,6 +19,7 @@ declare global {
 interface BizAPI {
   StartPay(any): Promise<any>;
   QueryPayResult(any): Promise<any>;
+  Print(any): Promise<any>;
 }
 
 @NgModule({

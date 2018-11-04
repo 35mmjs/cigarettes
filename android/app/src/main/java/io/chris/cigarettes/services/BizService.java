@@ -195,4 +195,52 @@ public class BizService {
 
         return queryResult;
     }
+
+    public JSObject print(JSObject printData) {
+        JSObject printRequest = new JSObject();
+        printRequest.put("printType", "ZZG");
+        printRequest.put("khbh", khbh);
+        printRequest.put("bmbh", "01");
+        printRequest.put("bmmc", "bm001");
+        printRequest.put("machine_code", "4004537959");
+        printRequest.put("printmsg", "测试打印内容 by Chris");
+
+        String parValueString = null;
+        try {
+            parValueString = URLEncoder.encode(printRequest.toString(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        WS ws = new WS();
+        SoapObject soapObject = ws.getRequest(methodName);
+        soapObject.addProperty("sessionId", LoginService.getInstance().getSessionId());
+        soapObject.addProperty("svr_type", "PRINT");
+        soapObject.addProperty("par_value", parValueString);
+
+        String md5Str = parValueString + khbh + user_pass + dateFormat.format(new Date()) + unit_pass;
+        soapObject.addProperty("md5_value", MD5.encrypt(md5Str).toUpperCase());
+        AsyncTask task = ws.execute(soapObject);
+        JSObject printResult = new JSObject();
+
+        try {
+            SoapObject res = (SoapObject) task.get();
+            Object stringValue = res.getProperty("stringValue");
+            Integer errorCode = (Integer) res.getProperty("errorCode");
+
+            if (errorCode > 0) {
+                printResult.put("success", false);
+                printResult.put("errorMessage", res.getProperty("errorMessage"));
+            } else {
+                printResult.put("success", true);
+                printResult.put("data", stringValue);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            printResult.put("success", false);
+            printResult.put("errorMessage", e.getMessage());
+        }
+
+        return printResult;
+    }
 }

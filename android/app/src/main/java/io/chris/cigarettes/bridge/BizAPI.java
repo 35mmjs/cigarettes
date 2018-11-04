@@ -33,7 +33,9 @@ public class BizAPI extends Plugin {
   }
 
   @PluginMethod()
-  public void Print() {
-    // TODO
+  public void Print(PluginCall call) {
+      JSObject printData = call.getData();
+      JSObject res = BizService.getInstance().print(printData);
+      call.success(res);
   }
 }
