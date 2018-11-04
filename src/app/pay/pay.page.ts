@@ -14,7 +14,7 @@ import { PayService } from './pay.service';
 export class PayPage implements OnInit {
   qrcode = '';
   queryInterval = null;
-  maxPollingTime = 15;
+  maxPollingTime = 10;
   pollingCount = 0;
   constructor(
     private router: Router,
@@ -63,12 +63,16 @@ export class PayPage implements OnInit {
     this.queryInterval = setInterval(() => {
       this.pollingCount ++;
       if (this.pollingCount > this.maxPollingTime) {
+        clearInterval(this.queryInterval);
         (async () => {
           const prepare = await this.loadingController.create({
-            message: '支付超时，请重试...',
+            message: '支付超时，5 秒后返回购物车...请重新生成订单',
+            duration: 5000,
           });
           prepare.present();
-          this.goBack();
+          setTimeout(() => {
+            this.goBack();
+          }, 5000);
         })();
       }
 
@@ -77,23 +81,19 @@ export class PayPage implements OnInit {
         'out_trade_no': orderInfo.out_trade_no,
       }).then(res => {
         if (res.success) {
-          // 支付成功，正在打印凭条
-          (async () => {
-            const prepare = await this.loadingController.create({
-              message: '支付成功，正在打印凭条...',
-            });
-            prepare.present();
+          if (res.payStatus === 'polling') {
+            return;
+          }
 
+          (async () => {
+            await this.paySuccess();
             // TODO: call Print
           })();
         } else {
-          this.presentAlert({
-            header: '支付失败!',
-            message: res.errorMessage,
-          });
+          this.payFailed(res.errorMessage);
         }
       });
-    }, 3000);
+    }, 5000);
   }
 
   async presentAlert({ header, message }) {
@@ -104,5 +104,21 @@ export class PayPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async paySuccess() {
+    clearInterval(this.queryInterval);
+    const prepare = await this.loadingController.create({
+      message: '支付成功，正在打印凭条...',
+    });
+    prepare.present();
+  }
+
+  async payFailed(errorMessage) {
+    clearInterval(this.queryInterval);
+    this.presentAlert({
+      header: '支付失败!',
+      message: errorMessage,
+    });
   }
 }

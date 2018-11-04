@@ -49,6 +49,9 @@ public class BizService {
         payRequest.put("terminal_id", "001");
         payRequest.put("xslx", "LS");
 
+        // Test pay
+        // payRequest.put("total_amount", "0.01");
+
         /*
         // Test Data
         payRequest.put("paytype", "MICROPAY");
@@ -166,12 +169,23 @@ public class BizService {
             Object stringValue = res.getProperty("stringValue");
             Integer errorCode = (Integer) res.getProperty("errorCode");
 
-            if (errorCode > 0) {
-                queryResult.put("success", false);
-                queryResult.put("errorMessage", stringValue.toString());
-            } else {
+            if (errorCode == 0) {
+                JSObject data = new JSObject();
+                data.put("res", stringValue);
                 queryResult.put("success", true);
-                queryResult.put("data", stringValue);
+                queryResult.put("payStatus", "success");
+                queryResult.put("data", data);
+            } else if (errorCode == 1) {
+                JSObject data = new JSObject();
+                data.put("res", stringValue);
+
+                queryResult.put("success", true);
+                queryResult.put("payStatus", "polling");
+                queryResult.put("data", data);
+            } else {
+                queryResult.put("success", false);
+                queryResult.put("payStatus", "failed");
+                queryResult.put("errorMessage", stringValue.toString());
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
