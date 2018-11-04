@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { QRCodeModule } from 'angularx-qrcode';
 
 import { PayPage } from './pay.page';
 
@@ -12,7 +11,6 @@ import { PayPage } from './pay.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    QRCodeModule,
     RouterModule.forChild([
       {
         path: '',
