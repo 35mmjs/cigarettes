@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { PluginService } from '../plugin.service';
 import { CartService } from './cart.service';
 import { PayService } from '../pay/pay.service';
 import { ProductService } from '../products/products.service';
@@ -22,6 +22,7 @@ export class CartPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private loadingController: LoadingController,
+    private pluginService: PluginService,
   ) {
 
   }
@@ -118,7 +119,7 @@ export class CartPage implements OnInit {
       })),
     };
 
-    Plugins.BizAPI.StartPay(payRequest).then((res) => {
+    this.pluginService.StartPay(payRequest).then((res: any) => {
       prepare.dismiss();
       if (res.success) {
         try {

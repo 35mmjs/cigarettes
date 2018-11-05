@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
-import { Plugins } from '@capacitor/core';
 import QRious from 'qrious';
 
+import { PluginService } from '../plugin.service';
 import { PayService } from './pay.service';
 import { CartService } from '../cart/cart.service';
 
@@ -23,6 +23,7 @@ export class PayPage implements OnInit {
     private cartService: CartService,
     private loadingController: LoadingController,
     private alertController: AlertController,
+    private pluginService: PluginService,
   ) {}
 
   ngOnInit() {
@@ -80,9 +81,9 @@ export class PayPage implements OnInit {
       }
 
       const { orderInfo } = this.payService;
-      Plugins.BizAPI.QueryPayResult({
+      this.pluginService.QueryPayResult({
         'out_trade_no': orderInfo.out_trade_no,
-      }).then(res => {
+      }).then((res: any) => {
         if (res.success) {
           if (res.payStatus === 'polling') {
             return;
@@ -113,6 +114,7 @@ export class PayPage implements OnInit {
     clearInterval(this.queryInterval);
     const prepare = await this.loadingController.create({
       message: '支付成功，正在打印凭条...',
+      duration: 1000,
     });
     prepare.present();
   }
@@ -126,13 +128,17 @@ export class PayPage implements OnInit {
   }
 
   async callPrint() {
-    Plugins.BizAPI.Print({
+    this.pluginService.Print({
       'items': this.cartService.getItems()
-    }).then(res => {
+    }).then((res: any) => {
       if (res.success) {
         // 打印成功提示
+        this.presentAlert({
+          header: '打印成功!',
+          message: '请取走票据',
+        });
       } else {
-        this.payFailed(res.errorMessage);
+        this.printFailed(res.errorMessage);
         // TODO: 增加重试逻辑
         // 实在打印不成功，就弹出打印清单，联系管理员
       }
@@ -140,7 +146,6 @@ export class PayPage implements OnInit {
   }
 
   async printFailed(errorMessage) {
-    clearInterval(this.queryInterval);
     this.presentAlert({
       header: '打印失败!',
       message: errorMessage,
