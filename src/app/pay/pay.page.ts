@@ -6,6 +6,7 @@ import QRious from 'qrious';
 import { PluginService } from '../plugin.service';
 import { PayService } from './pay.service';
 import { CartService } from '../cart/cart.service';
+import { ProductService } from '../products/products.service';
 
 @Component({
   selector: 'app-pay',
@@ -24,6 +25,7 @@ export class PayPage implements OnInit {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private pluginService: PluginService,
+    private productService: ProductService,
   ) {}
 
   ngOnInit() {
@@ -128,8 +130,19 @@ export class PayPage implements OnInit {
   }
 
   async callPrint() {
+    const productMap = this.productService.getProducts().reduce((prev, curr) => {
+      prev[curr.id] = curr;
+      return prev;
+    }, {});
+
+    const items = this.cartService.getItems().map(i => ({
+      ...i,
+      total: ((productMap[i.id].price as number) * (i.packetNum + i.cartonNum * 10)).toFixed(2),
+      ...productMap[i.id],
+    }));
+
     this.pluginService.Print({
-      'items': this.cartService.getItems()
+      'items': items,
     }).then((res: any) => {
       if (res.success) {
         // 打印成功提示
@@ -137,6 +150,9 @@ export class PayPage implements OnInit {
           header: '打印成功!',
           message: '请取走票据',
         });
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 1000);
       } else {
         this.printFailed(res.errorMessage);
         // TODO: 增加重试逻辑
