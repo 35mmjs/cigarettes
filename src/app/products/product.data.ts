@@ -26,7 +26,7 @@ export const products = [
   },
   {
     category: 'leisure',
-    id: '云端',
+    id: '休闲云端',
     price: 0,
     image: 'assets/烟包/休闲/云端.png',
     descTitle: '坐看云起时',
@@ -34,19 +34,19 @@ export const products = [
     slides: [{
       title: '科技感线条设计',
       desc: '水松纸设计细致简洁，无限交织、放射的线条组成一张信息网络，科技而富有时尚感，与外包装相呼应。',
-      image: 'assets/烟包/休闲/云端_1.jpg',
+      image: 'assets/烟包/休闲/云端_3.jpg',
     }, {
       title: '手工精选优质烟叶',
       desc: '全球最优质烟叶产地手工逐片精选上等烟叶，优中选优，确保每张烟叶油分充足，叶片舒展，不厚不薄，品质一致。1000担烟叶中只能精选出一担做利群（休闲云端）。',
-      image: 'assets/烟包/休闲/云端_2.jpg',
+      image: 'assets/烟包/休闲/云端_4.jpg',
     }, {
       title: '84mm细支',
       desc: '经过长期的潜心探索与大胆尝试，云端从滤嘴的过滤效率和高端消费人群的肺活量两个因素出发，确立吸阻水平和烟支长度，使抽吸时轻松平顺。',
-      image: 'assets/烟包/休闲/云端_3.jpg',
+      image: 'assets/烟包/休闲/云端_2.jpg',
     }, {
       title: '六边形中空复合滤棒',
       desc: '利群（休闲云端）滤棒产地位于德国阿尔卑斯山脚，天然木浆纤维滤嘴，配上六边形中空复合滤棒，使烟气气流产生回旋，形同云海，烟气更绵团、更温润、更柔和。',
-      image: 'assets/烟包/休闲/云端_4.jpg',
+      image: 'assets/烟包/休闲/云端_1.jpg',
     }]
   },
   {
@@ -122,7 +122,7 @@ export const products = [
   },
   {
     category: 'leisure',
-    id: '云端',
+    id: '休闲云端',
     price: 0,
     image: 'assets/烟包/休闲/云端.png',
     descTitle: '坐看云起时',
@@ -130,19 +130,19 @@ export const products = [
     slides: [{
       title: '科技感线条设计',
       desc: '水松纸设计细致简洁，无限交织、放射的线条组成一张信息网络，科技而富有时尚感，与外包装相呼应。',
-      image: 'assets/烟包/休闲/云端_1.jpg',
+      image: 'assets/烟包/休闲/云端_3.jpg',
     }, {
       title: '手工精选优质烟叶',
       desc: '全球最优质烟叶产地手工逐片精选上等烟叶，优中选优，确保每张烟叶油分充足，叶片舒展，不厚不薄，品质一致。1000担烟叶中只能精选出一担做利群（休闲云端）。',
-      image: 'assets/烟包/休闲/云端_2.jpg',
+      image: 'assets/烟包/休闲/云端_4.jpg',
     }, {
       title: '84mm细支',
       desc: '经过长期的潜心探索与大胆尝试，云端从滤嘴的过滤效率和高端消费人群的肺活量两个因素出发，确立吸阻水平和烟支长度，使抽吸时轻松平顺。',
-      image: 'assets/烟包/休闲/云端_3.jpg',
+      image: 'assets/烟包/休闲/云端_2.jpg',
     }, {
       title: '六边形中空复合滤棒',
       desc: '利群（休闲云端）滤棒产地位于德国阿尔卑斯山脚，天然木浆纤维滤嘴，配上六边形中空复合滤棒，使烟气气流产生回旋，形同云海，烟气更绵团、更温润、更柔和。',
-      image: 'assets/烟包/休闲/云端_4.jpg',
+      image: 'assets/烟包/休闲/云端_1.jpg',
     }]
   },
   {
@@ -214,7 +214,7 @@ export const products = [
   },
   {
     category: 'sunshine',
-    id: '橙中支',
+    id: '阳光·橙中支',
     price: 0,
     image: 'assets/烟包/阳光/橙中支.png',
     descTitle: '原来，橙可以如此出彩',
@@ -239,7 +239,7 @@ export const products = [
   },
   {
     category: 'sunshine',
-    id: '金色阳光',
+    id: '软金色阳光',
     price: 51,
     image: 'assets/烟包/阳光/金色阳光.png',
     descTitle: '我心向太阳',
@@ -357,7 +357,7 @@ export const products = [
   },
   {
     category: 'sunshine',
-    id: '橙中支',
+    id: '阳光·橙中支',
     price: 0,
     image: 'assets/烟包/阳光/橙中支.png',
     descTitle: '原来，橙可以如此出彩',
@@ -382,7 +382,7 @@ export const products = [
   },
   {
     category: 'sunshine',
-    id: '金色阳光',
+    id: '软金色阳光',
     price: 51,
     image: 'assets/烟包/阳光/金色阳光.png',
     descTitle: '我心向太阳',
@@ -639,7 +639,7 @@ export const products = [
   },
   {
     category: 'origin',
-    id: '新版8mg',
+    id: '8mg新版',
     price: 14,
     image: 'assets/烟包/原生/新版8mg.png',
     descTitle: '轻松舒适	原味生香',
