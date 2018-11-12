@@ -230,11 +230,11 @@ export const products = [
     }, {
       title: '双腔一体，保润保香',
       desc: '贴心独立包装，一包各10支，有效保留卷烟新鲜度。',
-      image: 'assets/烟包/阳光/橙中支_3.jpg',
+      image: 'assets/烟包/阳光/橙中支_4.jpg',
     }, {
       title: '阳光口感，饱满悠扬',
       desc: '香气透发饱满、柔绵舒缓，余味干净舒适。',
-      image: 'assets/烟包/阳光/橙中支_4.jpg',
+      image: 'assets/烟包/阳光/橙中支_3.jpg',
     }]
   },
   {
@@ -373,11 +373,11 @@ export const products = [
     }, {
       title: '双腔一体，保润保香',
       desc: '贴心独立包装，一包各10支，有效保留卷烟新鲜度。',
-      image: 'assets/烟包/阳光/橙中支_3.jpg',
+      image: 'assets/烟包/阳光/橙中支_4.jpg',
     }, {
       title: '阳光口感，饱满悠扬',
       desc: '香气透发饱满、柔绵舒缓，余味干净舒适。',
-      image: 'assets/烟包/阳光/橙中支_4.jpg',
+      image: 'assets/烟包/阳光/橙中支_3.jpg',
     }]
   },
   {
