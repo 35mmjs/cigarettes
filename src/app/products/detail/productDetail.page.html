@@ -29,7 +29,7 @@
         <div class="cart-detail-content">
           <div>
             <div class="cart-label">
-              单价：<span class="cart-price">￥{{product.price}}</span>
+              单价：<span class="cart-price"><span *ngIf="product.price > 0">￥ {{product.price}}</span></span>
             </div>
           </div>
           <div>
@@ -51,7 +51,7 @@
               </div>
               <div>条</div>
             </div>
-            <div>合计：<span class="cart-price cart-price-total">￥{{total}}</span></div>
+            <div>合计：<span class="cart-price cart-price-total" *ngIf="total > 0">￥{{total}}</span></div>
           </div>
         </div>
         <div class="cart-opts">
